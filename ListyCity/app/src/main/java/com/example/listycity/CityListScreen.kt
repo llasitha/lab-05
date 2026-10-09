@@ -46,6 +46,31 @@ fun CityListScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.End
         ) {
+            if (selectedCity != null) {
+                FloatingActionButton(
+                    modifier = Modifier.padding(16.dp),
+                    onClick = {
+                        val cityToUpdate = selectedCity
+                        if (
+                            cityToUpdate != null
+                        ) {
+                            onUpdateCity(
+                                cityToUpdate,
+                                City(
+                                    name = "",
+                                    province = ""
+                                )
+                            )
+
+                            selectedCity = null
+                            editedCityName = ""
+                            editedProvinceName = ""
+                        }
+                    }
+                ) {
+                    Text("-")
+                }
+            }
             FloatingActionButton(
                 modifier = Modifier.padding(16.dp),
                 onClick = {
@@ -129,7 +154,7 @@ fun CityListScreen(
                 Spacer(modifier = Modifier.width(8.dp))
 
                 Button(
-                    modifier = Modifier.padding(vertical = 12.dp),
+                    modifier = Modifier.padding(vertical = 6.dp),
                     onClick = {
                         val cityToUpdate = selectedCity
                         if (
@@ -151,7 +176,11 @@ fun CityListScreen(
                         }
                     }
                 ) {
-                    Text("UPDATE CITY")
+                    if(editedCityName.isNotBlank()) {
+                        Text("UPDATE CITY")
+                    } else {
+                        Text("DELETE CITY")
+                    }
                 }
             }
         }
